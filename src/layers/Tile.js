@@ -13,6 +13,7 @@ export function Tile({urlTemplate, x, y, z, size, pixelOrigin}) {
            height: size,
            width: size,
            pointerEvents: "none",
+           userSelect: "none",
            position: "absolute",
            left,
            top
