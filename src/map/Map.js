@@ -31,17 +31,15 @@ export class GeoMap extends Component {
       })
     }
   }
-  // TODO fix resize behavior. Does resize only fire on the window object?
-  // https://developer.mozilla.org/en-US/docs/Web/Events/resize
   componentDidMount() {
     if (this.containerRef) {
       this.updateDimensions();
-      this.containerRef.addEventListener("resize", this.updateDimensions);
+      window.addEventListener("resize", this.updateDimensions);
     }
   }
   componentWillUnmount() {
     if (this.containerRef) {
-      this.containerRef.removeEventListener("resize", this.updateDimensions);
+      window.removeEventListener("resize", this.updateDimensions);
     }
   }
   render() {
