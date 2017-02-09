@@ -1,0 +1,6 @@
+src/
+.babelrc
+.gitignore
+.gitmodules
+.npmignore
+!lib/

@@ -1,0 +1,13 @@
+{
+  "presets": ["stage-2",
+    ["env", {
+      "targets": {
+        "chrome": 52,
+        "browsers": ["last 2 versions", "safari 7"]
+      }
+    }]
+  ],
+  "plugins": ["transform-class-properties", "transform-es2015-spread", "transform-do-expressions", "transform-react-jsx"],
+  "only": ["index.js", "controls", "layers", "map", "core", "leaflet/src/core", "leaflet/src/geo", "leaflet/src/geometry"]
+
+}
