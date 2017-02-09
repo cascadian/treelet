@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import Hammer from 'react-hammerjs';
 import {Point} from "../leaflet/src/geometry/Point";
 import {LatLng, toLatLng} from "../leaflet/src/geo/LatLng";
-import {getBoundingBox, recenterOnPoint} from "./moveCanvas";
+import {getBoundingBox, pointToLatLng} from "./utils";
 import {MapPane} from "./MapPane";
 
 export class GeoMap extends Component {

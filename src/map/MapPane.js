@@ -2,7 +2,7 @@ import React, {PropTypes} from 'react';
 import Hammer from 'react-hammerjs';
 import {Point} from "../leaflet/src/geometry/Point";
 import {LatLng, toLatLng} from "../leaflet/src/geo/LatLng";
-import {getBoundingBox, recenterOnPoint} from "./moveCanvas";
+import {getBoundingBox, pointToLatLng} from "./utils";
 
 export const MapPane = (props) => {
   const {renderLayers, onChangeViewport, onPanning, panningState, viewport, crs, style} = props;
@@ -20,7 +20,7 @@ export const MapPane = (props) => {
         var y = pointer.clientY;
         var newZoom = zoom + 1;
         const bbox = getBoundingBox(props, newZoom);
-        const newCenter = recenterOnPoint(crs, [x + bbox[0], y + bbox[1], newZoom]);
+        const newCenter = pointToLatLng(crs, [x + bbox[0], y + bbox[1], newZoom]);
         onChangeViewport({
           center: newCenter,
           zoom: newZoom
@@ -61,7 +61,7 @@ export const MapPane = (props) => {
           const {clientWidth, clientHeight} = props.layout;
           const [centerX, centerY] = [clientWidth / 2, clientHeight / 2];
           const bbox = getBoundingBox(props);
-          const pannedCenter = recenterOnPoint(crs, [(centerX - offsetX) + bbox[0], (centerY - offsetY) + bbox[1], zoom]);
+          const pannedCenter = pointToLatLng(crs, [(centerX - offsetX) + bbox[0], (centerY - offsetY) + bbox[1], zoom]);
           onChangeViewport({
             center: pannedCenter
           });
