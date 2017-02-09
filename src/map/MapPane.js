@@ -5,10 +5,11 @@ import {LatLng, toLatLng} from "../leaflet/src/geo/LatLng";
 import {getBoundingBox, recenterOnPoint} from "./moveCanvas";
 
 export const MapPane = (props) => {
-  const {renderLayers, onChangeViewport, viewport, crs, style} = props;
+  const {renderLayers, onChangeViewport, onPanning, panningState, viewport, crs, style} = props;
   const {zoom, center} = viewport;
   const centerLatLng = toLatLng(center);
   const pixelCenter = crs.latLngToPoint(centerLatLng, zoom).floor();
+  const {startX, startY, endX, endY} = panningState;
 
   return (
     <Hammer
@@ -22,18 +23,49 @@ export const MapPane = (props) => {
         const newCenter = recenterOnPoint(crs, [x + bbox[0], y + bbox[1], newZoom]);
         onChangeViewport({
           center: newCenter,
-          zoom: newZoom,
-          bbox
+          zoom: newZoom
         });
       }}
       onPanStart={(e) => {
-
+        if (onPanning) {
+          onPanning({
+            isPanning: true,
+            startX: e.pointers[0].screenX,
+            startY: e.pointers[0].screenY
+          });
+        }
       }}
-      onPanEnd={() => {
-
+      onPanEnd={(e) => {
+        if (onPanning) {
+          onPanning({
+            isPanning: false,
+            endX: e.pointers[0].screenX,
+            endY: e.pointers[0].screenY
+          })
+        }
       }}
       onPan={(e) => {
+        const {screenX, screenY} = e.pointers[0];
+        console.log("onPanning startX:" + startX + " startY:" + startY);
+        const offsetX = screenX - startX;
+        const offsetY = screenY - startY;
 
+        const offsetPixels = Math.abs(offsetX) + Math.abs(offsetY);
+
+        if (offsetPixels > 3) {
+          onPanning({
+            startX: screenX,
+            startY: screenY
+          });
+
+          const {clientWidth, clientHeight} = props.layout;
+          const [centerX, centerY] = [clientWidth / 2, clientHeight / 2];
+          const bbox = getBoundingBox(props);
+          const pannedCenter = recenterOnPoint(crs, [(centerX - offsetX) + bbox[0], (centerY - offsetY) + bbox[1], zoom]);
+          onChangeViewport({
+            center: pannedCenter
+          });
+        }
       }}>
         <div style={{...style, position: "absolute"}}></div>
       </Hammer>

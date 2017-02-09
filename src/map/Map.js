@@ -5,7 +5,6 @@ import {Point} from "../leaflet/src/geometry/Point";
 import {LatLng, toLatLng} from "../leaflet/src/geo/LatLng";
 import {getBoundingBox, recenterOnPoint} from "./moveCanvas";
 import {MapPane} from "./MapPane";
-var e = React.createElement;
 
 export class GeoMap extends Component {
   constructor(props) {
@@ -73,8 +72,7 @@ export class GeoMap extends Component {
         style={mergedStyle}
 
         ref={(ref) => this.containerRef = ref} >
-        <MapPane
-         {...this.props} />
+        
          {layers()}
         {this.props.children}
       </div>
