@@ -6,7 +6,7 @@ import {LatLng, toLatLng} from "../leaflet/src/geo/LatLng";
 import {getBoundingBox, pointToLatLng} from "./utils";
 import {MapPane} from "./MapPane";
 
-export class GeoMap extends Component {
+export class MapView extends Component {
   constructor(props) {
     super(props);
     this.updateDimensions = this.updateDimensions.bind(this);
@@ -43,23 +43,22 @@ export class GeoMap extends Component {
     }
   }
   render() {
-    const {style, renderLayers,
-          onChangeViewport,
+    const {renderLayers, style, ...rest} = this.props;
+    const {onChangeViewport,
           onLayoutChange,
           layout,
           viewport: {zoom = 13, center = [0, 0]},
-          crs} = this.props;
+          crs} = rest;;
     const mergedStyle = {
       position: "relative",
       overflow: "hidden",
-      zIndex: 400,
       backgroundColor: "transparent",
       ...style};
 
       const layers = () => {
         if (layout && layout.clientWidth && layout.clientHeight && renderLayers) {
           const bbox = getBoundingBox(this.props);
-          const result = renderLayers({...this.props, bbox});
+          const result = renderLayers({...rest, bbox});
           return result || null;
         } else {
           return null;

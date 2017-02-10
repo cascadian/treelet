@@ -10,7 +10,7 @@ export function ZoomControl({onChangeViewport, viewport: {zoom}}) {
            position: "absolute",
            top: 10,
            left: 10,
-           zIndex: 1500
+           zIndex: 700
          }}>
       <button onClick={() => onChangeViewport({zoom: zoom + 1})}>+</button>
       <button onClick={() => onChangeViewport({zoom: zoom - 1})}>-</button>

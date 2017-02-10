@@ -46,7 +46,6 @@ export const MapPane = (props) => {
       }}
       onPan={(e) => {
         const {screenX, screenY} = e.pointers[0];
-        console.log("onPanning startX:" + startX + " startY:" + startY);
         const offsetX = screenX - startX;
         const offsetY = screenY - startY;
 
@@ -67,7 +66,7 @@ export const MapPane = (props) => {
           });
         }
       }}>
-        <div style={{...style, position: "absolute"}}></div>
+        <div style={{...style, width: "100%", height: "100%"}}></div>
       </Hammer>
   );
 };

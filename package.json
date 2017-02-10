@@ -25,6 +25,7 @@
   },
   "homepage": "https://github.com/cascadian/treelet#readme",
   "dependencies": {
+    "@turf/turf": "^3.9.0",
     "react": "^15.4.2",
     "react-dom": "^15.4.2",
     "react-hammerjs": "^0.5.0"
